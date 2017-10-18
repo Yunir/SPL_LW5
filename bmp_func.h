@@ -12,5 +12,6 @@
     } read_error_code;
 
     read_error_code read_header(FILE* fin, bmp_header *header_info);
+    read_error_code read_body(struct picture *image, FILE* file);
 
 #endif

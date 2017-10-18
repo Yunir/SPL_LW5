@@ -15,5 +15,6 @@ void main() {
     struct picture *image = malloc(sizeof(struct picture));
     image->width = pic_header.biWidth;
     image->height = pic_header.biHeight;
-    printf("\n");
+    error_check(read_body(image, pic) != 0);
+    fclose(pic);
 }
