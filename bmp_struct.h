@@ -13,7 +13,7 @@
         struct pixel *data;
     };
 
-    struct __attribute__((packed)) bmp_header {
+    typedef struct __attribute__((packed)) {
         uint16_t bfType;
         uint32_t bfileSize;
         uint32_t bfReserved;
@@ -29,6 +29,6 @@
         uint32_t biYPelsPerMeter;
         uint32_t biClrUsed;
         uint32_t biClrImportant;
-    };
+    } bmp_header;
 
 #endif

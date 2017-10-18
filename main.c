@@ -1,14 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "bmp_struct.h"
-#include "readwrite.h"
+#include "bmp_func.h"
+
+void error_check(read_error_code work_result){
+    if(work_result != READ_OK) exit(1);
+}
 
 void main() {
+    bmp_header pic_header;
     FILE *pic = fopen("./images/picture.bmp", "r+");
     FILE *modified_pic = fopen("./images/rotated_picture.bmp", "r+");
-    if (pic != NULL) {
-        struct picture *image = malloc(sizeof(struct picture));
-    } else {
-        printf("Picture does not exist!");
-    }
+    error_check(read_header(pic, &pic_header) != 0);
+    struct picture *image = malloc(sizeof(struct picture));
+    image->width = pic_header.biWidth;
+    image->height = pic_header.biHeight;
+    printf("\n");
 }
