@@ -9,8 +9,9 @@ void main() {
     struct picture* pic_config = malloc(sizeof(struct picture));
     load_bmp(pic_file, pic_header, pic_config);
     fclose(pic_file);
-    //TODO: rotate
     pic_file = fopen("./images/rp.bmp", "wb");
+    pic_header = rotate_header(pic_header);
+    pic_config = rotate_right(pic_config);
     save_bmp(pic_file, pic_header, pic_config);
     fclose(pic_file);
 
