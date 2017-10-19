@@ -12,4 +12,4 @@ bmp_func.o: bmp_func.c
 	gcc $(FLAGS) bmp_func.o bmp_func.c
 
 clean:
-	rm -f main.o bmp_func.o main
+	rm -f main.o bmp_func.o main ./images/rp.bmp

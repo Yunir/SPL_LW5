@@ -3,18 +3,11 @@
 #include "bmp_struct.h"
 #include "bmp_func.h"
 
-void error_check(read_error_code work_result){
-    if(work_result != READ_OK) exit(1);
-}
-
 void main() {
-    bmp_header pic_header;
-    FILE *pic = fopen("./images/picture.bmp", "r+");
-    FILE *modified_pic = fopen("./images/rotated_picture.bmp", "r+");
-    error_check(read_header(pic, &pic_header) != 0);
-    struct picture *image = malloc(sizeof(struct picture));
-    image->width = pic_header.biWidth;
-    image->height = pic_header.biHeight;
-    error_check(read_body(image, pic) != 0);
-    fclose(pic);
+    FILE *pic_file = fopen("./images/p.bmp", "rb");
+    struct bmp_header *pic_header = malloc(sizeof(struct bmp_header));
+    struct picture *pic_config = malloc(sizeof(struct picture));
+    load_bmp(pic_file, pic_header, pic_config);
+    fclose(pic_file);
+    pic_file = fopen("./images/rp.bmp", "wb");
 }
