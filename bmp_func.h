@@ -5,5 +5,5 @@
     #define BMP_FUNC_H
 
     void load_bmp(FILE* file, struct bmp_header* header, struct picture* image);
-
+    void save_bmp(FILE* file, struct bmp_header* header, struct picture* image);
 #endif
