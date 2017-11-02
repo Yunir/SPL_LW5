@@ -74,3 +74,25 @@ void save_bmp(FILE* file, struct bmp_header* header, struct picture* image) {
 		fseek(file, padding, SEEK_CUR);
     }
 }
+
+/*struct bmp_header* set_header(int width, int height) {
+    struct bmp_header new_header = { 0x4D42, -1, 0, 54, 40, -1, -1, 1, 24, 0, -1, 0, 0, 0, 0 };
+    new_header.bfileSize = sizeof(struct bmp_header) + (width * sizeof(struct pixel) + padding)*height;
+    new_header.biWidth = width;
+    new_header.biHeight = height;
+    new_header.biSizeImage = (width* sizeof(struct pixel)  + padding)*height;
+}*/
+
+void set_cube(struct picture* cube_config, int points[][3], int connections[][2], int count_of_points) {
+    int i, x_start, y_start;
+    int step_x = -10;
+    int step_y = 10;
+    cube_config->width = 100;
+    cube_config->height = 100;
+    x_start = cube_config->width + step_x;
+    y_start = cube_config->height + step_y;
+    printf("%d %d %d\n", x_start, y_start, connections[0][0]);
+    for(i = 0; i < count_of_points; ++i) {
+        printf("%d ", points[i][0]);
+    }
+}
