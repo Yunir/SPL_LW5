@@ -3,10 +3,17 @@
 #include "bmp_struct.h"
 #include "bmp_func.h"
 
-void main() {
-    FILE* pic_file = fopen("./images/p.bmp", "rb");
-    struct bmp_header* pic_header = malloc(sizeof(struct bmp_header));
-    struct picture* pic_config = malloc(sizeof(struct picture));
+int main(int argc, char** argv) {
+    FILE* pic_file;
+    struct bmp_header* pic_header;
+    struct picture* pic_config;
+    if (argc > 1) {
+        pic_file = fopen(argv[1], "rb");
+    } else {
+        pic_file = fopen("./images/p.bmp", "rb");
+    }
+    pic_header = malloc(sizeof(struct bmp_header));
+    pic_config = malloc(sizeof(struct picture));
     load_bmp(pic_file, pic_header, pic_config);
     fclose(pic_file);
     pic_file = fopen("./images/rp.bmp", "wb");
@@ -14,5 +21,5 @@ void main() {
     pic_config = rotate_right(pic_config);
     save_bmp(pic_file, pic_header, pic_config);
     fclose(pic_file);
-
+    return 0;
 }
