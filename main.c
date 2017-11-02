@@ -21,5 +21,6 @@ int main(int argc, char** argv) {
     pic_config = rotate_right(pic_config);
     save_bmp(pic_file, pic_header, pic_config);
     fclose(pic_file);
+    something
     return 0;
 }
