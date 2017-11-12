@@ -100,7 +100,7 @@ void set_cube(struct picture* cube_config, double points[][3], int connections[]
     cube_config->data = (struct pixel*)malloc((cube_config->width* sizeof(struct pixel) + 0) * cube_config->height);
     x_start = step_x;
     y_start = step_y;
-    printf("X and Y Start: %d %d \nConnections: %d \n", x_start, y_start, connections[0][0]);
+    printf("X and Y Start: %d %d \n", x_start, y_start);
     print_cube(points, count_of_points);
     render_cube_to_2d(points, count_of_points);
     print_cube(points, count_of_points);
@@ -118,6 +118,60 @@ void set_cube(struct picture* cube_config, double points[][3], int connections[]
         (cube_config->data + (y_start+y)*cube_config->width + (x_start+x))->b = 0;
         (cube_config->data + (y_start+y)*cube_config->width + (x_start+x))->g = 127;
         (cube_config->data + (y_start+y)*cube_config->width + (x_start+x))->r = 255;
+    }
+    for (k = 0; k < 12; ++k) {
+        int x1 = (int)(points[connections[k][0]][1]*step_x);
+        int y1 = (int)(points[connections[k][0]][2]*step_y);
+        int x2 = (int)(points[connections[k][1]][1]*step_x);
+        int y2 = (int)(points[connections[k][1]][2]*step_y);
+        int s_x = ((x1 < x2) ? 1 : -1);
+        int s_y = ((y1 < y2) ? 1 : -1);
+        int z, t;
+        int x_whole = (x2-x1)*s_x;
+        int y_whole = (y2-y1)*s_y;
+        bool x_lower = (x_whole < y_whole ? true : false);
+        int diff;
+        if(x_whole == 0 || y_whole == 0) {
+            diff = 1;
+        } else {
+            diff = (int)(x_lower ? y_whole/x_whole : x_whole/y_whole);
+        }
+        printf("\n[%d, %d] -> [%d, %d]\n", x1, y1, x2, y2);
+        for (z = 0; z < (x_lower ? x_whole : y_whole); ++z) {
+            x1 += s_x;
+            y1 += s_y;
+            printf("[ %d %d ] 1 phase\n", (x_start+x1), (y_start+y1));
+            (cube_config->data + (y_start+y1)*cube_config->width + (x_start+x1))->b = 0;
+            (cube_config->data + (y_start+y1)*cube_config->width + (x_start+x1))->g = 127;
+            (cube_config->data + (y_start+y1)*cube_config->width + (x_start+x1))->r = 255;
+            for(t = 0; t < diff-1; ++t) {
+                /* stupid comment */
+                if (x_lower) {
+                    y1 += s_y;
+                } else {
+                    x1 += s_x;
+                }
+                printf("[ %d %d ] 2 phase\n", (x_start+x1), (y_start+y1));
+                (cube_config->data + (y_start+y1)*cube_config->width + (x_start+x1))->b = 0;
+                (cube_config->data + (y_start+y1)*cube_config->width + (x_start+x1))->g = 127;
+                (cube_config->data + (y_start+y1)*cube_config->width + (x_start+x1))->r = 255;
+            }
+        }
+        while (x1 != x2) {
+            x1 += s_x;
+            printf("[ %d %d ] 3 phase\n", (x_start+x1), (y_start+y1));
+            (cube_config->data + (y_start+y1)*cube_config->width + (x_start+x1))->b = 0;
+            (cube_config->data + (y_start+y1)*cube_config->width + (x_start+x1))->g = 127;
+            (cube_config->data + (y_start+y1)*cube_config->width + (x_start+x1))->r = 255;
+
+        }
+        while (y1 != y2) {
+            y1 += s_y;
+            printf("[ %d %d ] 4 phase\n", (x_start+x1), (y_start+y1));
+            (cube_config->data + (y_start+y1)*cube_config->width + (x_start+x1))->b = 0;
+            (cube_config->data + (y_start+y1)*cube_config->width + (x_start+x1))->g = 127;
+            (cube_config->data + (y_start+y1)*cube_config->width + (x_start+x1))->r = 255;
+        }
     }
 }
 
