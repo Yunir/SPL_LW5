@@ -2,6 +2,8 @@
 #include "bmp_struct.h"
 #include "bmp_func.h"
 #define PI 3.14159265
+#define XX 1
+#define YY 2
 
 void load_bmp(FILE* file, struct bmp_header* header, struct picture* image) {
     uint32_t i;
@@ -93,8 +95,8 @@ void set_cube(struct picture* cube_config, double points[][3], int connections[]
     uint32_t i, j;
     int k;
     int x_start, y_start;
-    int step_x = 20;
-    int step_y = 20;
+    int step_x = 30;
+    int step_y = 30;
     cube_config->width = 100;
     cube_config->height = 100;
     cube_config->data = (struct pixel*)malloc((cube_config->width* sizeof(struct pixel) + 0) * cube_config->height);
@@ -102,7 +104,7 @@ void set_cube(struct picture* cube_config, double points[][3], int connections[]
     y_start = step_y;
     printf("X and Y Start: %d %d \n", x_start, y_start);
     print_cube(points, count_of_points);
-    rotate_cube(50, points, count_of_points);
+    rotate_cube(60, points, count_of_points);
     render_cube_to_2d(points, count_of_points);
     print_cube(points, count_of_points);
     for (i = 0; i < cube_config->height; ++i) {
@@ -113,18 +115,18 @@ void set_cube(struct picture* cube_config, double points[][3], int connections[]
         }
     }
     for (k = 0; k < count_of_points; ++k) {
-        int x = (int)(points[k][2]*step_x);
-        int y = (int)(points[k][1]*step_y);
+        int x = (int)(points[k][XX]*step_x);
+        int y = (int)(points[k][YY]*step_y);
         printf("%d. [ %d %d ]\n", k+1, (x_start+x), (y_start+y));
         (cube_config->data + (y_start+y)*cube_config->width + (x_start+x))->b = 0;
         (cube_config->data + (y_start+y)*cube_config->width + (x_start+x))->g = 127;
         (cube_config->data + (y_start+y)*cube_config->width + (x_start+x))->r = 255;
     }
     for (k = 0; k < 12; ++k) {
-        int x1 = (int)(points[connections[k][0]][2]*step_x);
-        int y1 = (int)(points[connections[k][0]][1]*step_y);
-        int x2 = (int)(points[connections[k][1]][2]*step_x);
-        int y2 = (int)(points[connections[k][1]][1]*step_y);
+        int x1 = (int)(points[connections[k][0]][XX]*step_x);
+        int y1 = (int)(points[connections[k][0]][YY]*step_y);
+        int x2 = (int)(points[connections[k][1]][XX]*step_x);
+        int y2 = (int)(points[connections[k][1]][YY]*step_y);
         int s_x = ((x1 < x2) ? 1 : -1);
         int s_y = ((y1 < y2) ? 1 : -1);
         int z, t;
