@@ -16,6 +16,11 @@ void load_bmp(FILE* file, struct bmp_header* header, struct picture* image) {
     for (i = 0; i < image->height; ++i) {
         fread(image->data + i*image->width, sizeof(struct pixel), image->width, file);
 		fseek(file, padding, SEEK_CUR);
+        /*printf("[ ");
+        for(j = 0; j < image->width; ++j) {
+            printf("%d%d%d ", (image->data+i)->b, (image->data+i)->g, (image->data+i)->r);
+        }
+        printf(" ]\n");*/
     }
 }
 
@@ -75,7 +80,8 @@ void save_bmp(FILE* file, struct bmp_header* header, struct picture* image) {
     }
 }
 
-/*struct bmp_header* set_header(int width, int height) {
+/*struct bmp_header* set_header(struct bmp_header* header, int width, int height) {
+    int padding = (4 - (header->biWidth * sizeof(struct pixel)) % 4) % 4;
     struct bmp_header new_header = { 0x4D42, -1, 0, 54, 40, -1, -1, 1, 24, 0, -1, 0, 0, 0, 0 };
     new_header.bfileSize = sizeof(struct bmp_header) + (width * sizeof(struct pixel) + padding)*height;
     new_header.biWidth = width;
@@ -84,17 +90,26 @@ void save_bmp(FILE* file, struct bmp_header* header, struct picture* image) {
 }*/
 
 void set_cube(struct picture* cube_config, double points[][3], int connections[][2], int count_of_points) {
+    uint32_t i, j;
     int x_start, y_start;
-    int step_x = -10;
-    int step_y = 10;
+    int step_x = 10;
+    int step_y = -10;
     cube_config->width = 100;
     cube_config->height = 100;
-    x_start = cube_config->width + step_x;
+    cube_config->data = (struct pixel*)malloc((cube_config->width* sizeof(struct pixel) + 0) * cube_config->height);
+    x_start = step_x;
     y_start = cube_config->height + step_y;
     printf("X and Y Start: %d %d \nConnections: %d \n", x_start, y_start, connections[0][0]);
     print_cube(points, count_of_points);
     render_cube_to_2d(points, count_of_points);
     print_cube(points, count_of_points);
+    for (i = 0; i < cube_config->height; ++i) {
+        for(j = 0; j < cube_config->width; ++j) {
+            (cube_config->data + i*cube_config->width + j)->b = 255;
+            (cube_config->data + i*cube_config->width + j)->g = 255;
+            (cube_config->data + i*cube_config->width + j)->r = 255;
+        }
+    }
 }
 
 void print_cube(double points[][3], int count_of_points) {

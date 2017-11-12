@@ -9,6 +9,7 @@
     struct picture* rotate_right(struct picture const * source);
     struct picture* rotate_left(struct picture const * source);
     struct bmp_header* rotate_header(struct bmp_header const * old_header);
+    struct bmp_header* set_header(struct bmp_header* header, int width, int height);
     void set_cube(struct picture*, double[][3], int[][2], int);
     void print_cube(double[][3], int);
     void render_cube_to_2d(double [][3], int);

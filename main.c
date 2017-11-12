@@ -27,7 +27,8 @@ int main(int argc, char** argv) {
     save_bmp(pic_file, pic_header, pic_config);
     fclose(pic_file);
     pic_file = fopen("./images/cube.bmp", "wb");
-    /*pic_header = set_header(pic_header);*/
     set_cube(cube_config, points, connections, count_of_points);
+    save_bmp(pic_file, pic_header, cube_config);
+    fclose(pic_file);
     return 0;
 }
