@@ -91,14 +91,15 @@ void save_bmp(FILE* file, struct bmp_header* header, struct picture* image) {
 
 void set_cube(struct picture* cube_config, double points[][3], int connections[][2], int count_of_points) {
     uint32_t i, j;
+    int k;
     int x_start, y_start;
     int step_x = 10;
-    int step_y = -10;
+    int step_y = 10;
     cube_config->width = 100;
     cube_config->height = 100;
     cube_config->data = (struct pixel*)malloc((cube_config->width* sizeof(struct pixel) + 0) * cube_config->height);
     x_start = step_x;
-    y_start = cube_config->height + step_y;
+    y_start = step_y;
     printf("X and Y Start: %d %d \nConnections: %d \n", x_start, y_start, connections[0][0]);
     print_cube(points, count_of_points);
     render_cube_to_2d(points, count_of_points);
@@ -109,6 +110,14 @@ void set_cube(struct picture* cube_config, double points[][3], int connections[]
             (cube_config->data + i*cube_config->width + j)->g = 255;
             (cube_config->data + i*cube_config->width + j)->r = 255;
         }
+    }
+    for (k = 0; k < count_of_points; ++k) {
+        int x = (int)(points[k][1]*step_x);
+        int y = (int)(points[k][2]*step_y);
+        printf("[ %d %d ]\n", (x_start+x), (y_start+y));
+        (cube_config->data + (y_start+y)*cube_config->width + (x_start+x))->b = 0;
+        (cube_config->data + (y_start+y)*cube_config->width + (x_start+x))->g = 127;
+        (cube_config->data + (y_start+y)*cube_config->width + (x_start+x))->r = 255;
     }
 }
 
