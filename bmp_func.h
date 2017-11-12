@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <math.h>
 
 #ifndef BMP_FUNC_H
     #define BMP_FUNC_H
@@ -13,5 +14,6 @@
     struct bmp_header* set_header(struct bmp_header* header, int width, int height);
     void set_cube(struct picture*, double[][3], int[][2], int);
     void print_cube(double[][3], int);
+    void rotate_cube(int, double [][3], int);
     void render_cube_to_2d(double [][3], int);
 #endif

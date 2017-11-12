@@ -3,7 +3,7 @@ FLAGS=-ggdb -c -Wall -Werror -Wextra -std=c89 -ansi -pedantic
 all: main
 
 main: main.o bmp_func.o
-	gcc -ggdb -o main main.o bmp_func.o
+	gcc -ggdb -o main main.o bmp_func.o -lm
 
 main.o: main.c
 	gcc $(FLAGS) -o main.o main.c
