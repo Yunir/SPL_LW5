@@ -5,7 +5,7 @@
 #define count_of_points 8
 
 int main(int argc, char** argv) {
-    int points[count_of_points][3] = {{0,0,0}, {1,0,0}, {0,1,0}, {1,1,0}, {0,0,1}, {1,0,1}, {0,1,1}, {1,1,1}};
+    double points[count_of_points][3] = {{0,0,0}, {1,0,0}, {0,1,0}, {1,1,0}, {0,0,1}, {1,0,1}, {0,1,1}, {1,1,1}};
     int connections[12][2] = {{0, 1}, {0, 2}, {0, 4}, {1, 3}, {1, 5}, {2, 3}, {2, 6}, {3, 7}, {4, 5}, {4, 6}, {5, 7}, {6, 7}};
     FILE* pic_file;
     struct bmp_header* pic_header;
@@ -29,6 +29,5 @@ int main(int argc, char** argv) {
     pic_file = fopen("./images/cube.bmp", "wb");
     /*pic_header = set_header(pic_header);*/
     set_cube(cube_config, points, connections, count_of_points);
-    printf("%d %d %d\n", points[0][0], connections[11][1], cube_config->width);
     return 0;
 }

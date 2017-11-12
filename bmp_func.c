@@ -83,16 +83,34 @@ void save_bmp(FILE* file, struct bmp_header* header, struct picture* image) {
     new_header.biSizeImage = (width* sizeof(struct pixel)  + padding)*height;
 }*/
 
-void set_cube(struct picture* cube_config, int points[][3], int connections[][2], int count_of_points) {
-    int i, x_start, y_start;
+void set_cube(struct picture* cube_config, double points[][3], int connections[][2], int count_of_points) {
+    int x_start, y_start;
     int step_x = -10;
     int step_y = 10;
     cube_config->width = 100;
     cube_config->height = 100;
     x_start = cube_config->width + step_x;
     y_start = cube_config->height + step_y;
-    printf("%d %d %d\n", x_start, y_start, connections[0][0]);
+    printf("X and Y Start: %d %d \nConnections: %d \n", x_start, y_start, connections[0][0]);
+    print_cube(points, count_of_points);
+    render_cube_to_2d(points, count_of_points);
+    print_cube(points, count_of_points);
+}
+
+void print_cube(double points[][3], int count_of_points) {
+    int i;
     for(i = 0; i < count_of_points; ++i) {
-        printf("%d ", points[i][0]);
+        printf("%d. [ %f %f %f ]\n", i+1, points[i][0], points[i][1], points[i][2]);
+    }
+    printf("\n");
+}
+
+void render_cube_to_2d(double points[][3], int count_of_points) {
+    int i;
+    printf("%f\n", points[1][0]/2);
+    for(i = 0; i < count_of_points; ++i) {
+        points[i][2] += points[i][0]/2;
+        points[i][1] += points[i][0]/2;
+        points[i][0] = 0;
     }
 }
