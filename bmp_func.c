@@ -104,7 +104,7 @@ void set_cube(struct picture* cube_config, double points[][3], int connections[]
     y_start = step_y;
     printf("X and Y Start: %d %d \n", x_start, y_start);
     print_cube(points, count_of_points);
-    rotate_cube(60, points, count_of_points);
+    rotate_cube(185, points, count_of_points);
     render_cube_to_2d(points, count_of_points);
     print_cube(points, count_of_points);
     for (i = 0; i < cube_config->height; ++i) {
